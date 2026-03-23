@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Geolocation API 예제(위도,경도 띄우기)</title>
+    <style>
+        #result {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            min-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>내 위치 정보 가져오기</h3>
+    <button onclick="getMyPosition()" type="button">나의 현재 위치 확인</button>
+    <div id="result">위치 버튼을 눌러주세요.</div>
+
+    <script type="text/javascript">
+        function getMyPosition() {
+            const resultDiv = document.getElementById("result");
+
+            // 1. 브라우저 지원 여부 확인
+            if (navigator.geolocation) {
+                resultDiv.innerHTML = "위치 정보를 가져오는 중...";
+
+                // 옵션 설정 (정확도 향상 및 타임아웃)
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+
+                navigator.geolocation.getCurrentPosition(showPosition, showError, options);
+            } else {
+                resultDiv.innerHTML = "이 브라우저에서는 위치 정보를 지원하지 않습니다.";
+            }
+        }
+
+        // 성공 콜백함수
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            document.getElementById("result").innerHTML =
+                `<strong>위도:</strong> ${lat} <br> <strong>경도:</strong> ${lng}`;
+        }
+
+        // 실패 콜백함수
+        function showError(error) {
+            const resultDiv = document.getElementById("result");
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    resultDiv.innerHTML = "사용자가 위치 정보 공유를 거부했습니다.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    resultDiv.innerHTML = "위치 정보를 사용할 수 없습니다 (네트워크 문제 등).";
+                    break;
+                case error.TIMEOUT:
+                    resultDiv.innerHTML = "위치 정보를 가져오는 시간이 초과되었습니다.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    resultDiv.innerHTML = "알 수 없는 오류가 발생했습니다.";
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>
