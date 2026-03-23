@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript">
+        // Canvas API 사용하기5(사각형, 삼각형, 원형 예제 그리기)
+    </script>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="600" height="400" style="border: 3px solid">
+    </canvas>
+    <script type="text/javascript">
+        var ctx = document.getElementById("myCanvas");
+        var myContext = ctx.getContext("2d");
+
+        //파란 사각형 그라디언트 그림
+        var gradient = myContext.createLinearGradient(0, 0, 100, 0);
+        gradient.addColorStop(0, "white");
+        gradient.addColorStop(1, "blue");
+        myContext.fillStyle = gradient;
+        myContext.fillRect(10, 10, 100, 100);
+
+        //빨간 사각형 그라디언트 그림
+        gradient = myContext.createLinearGradient(150, 0, 250, 100);
+        gradient.addColorStop(0, "white");
+        gradient.addColorStop(1, "red");
+        myContext.fillStyle = gradient;
+        myContext.fillRect(150, 10, 100, 100);
+    </script>
+</body>
+
+</html>
